@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Weather API</title>
+</head>
+
+<body>
+    <div class="bg-img">
+        <img src="./src/weather-app.jpg" alt="">
+    </div>
+    <div class="container">
+        <div class="weathersec" id="output">
+            <h2>Weather</h2>
+            <div class="description" >
+                <h1>30.03°c</h1>
+                <p>feel like 28.50°</p>
+                <h3>London</h3>
+                <h4></h4>
+                <div class="son-icon">
+                    <!-- <i class="fa-solid fa-sun"></i> -->
+                    <p>fog</p>
+                    <p class="det">description</p>
+                </div>
+            </div>
+            <div class="searchbox">
+                <div class="search-sec">
+                    <input type="text" placeholder="  Enter your city" id="user_input">
+
+                    <button onclick="search()" type="button">
+                        <i class="fa-sharp fa-solid fa-magnifying-glass"></i>
+                    </button>
+
+                </div>
+                <div class="details">
+                    <p class="main-heading">Weather Details</p>
+                    <p class="sub-heading">country</p>
+                    <p class="main-heading">humidity</p>
+                    <p class="sub-heading">91%</p>
+                    <p class="main-heading">wind</p>
+                    <p class="sub-heading">0.51kmps</p>
+                    <p class="main-heading">pressure</p>
+                    <p class="sub-heading">1032</p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+<script>
+    const search = async () => {
+        let city = user_input.value
+        if (city) {
+            //   api
+            const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8ac5c4d57ba6a4b3dfcf622700447b1e&units=metric`)
+            response.json().then(data => {
+                let country = data.sys.country
+                let humidity = data.main.humidity
+                let wind = data.wind.speed
+                let pressure = data.main.pressure
+                let temprature = data.main.temp
+                let feels_like = data.main.feels_like
+                let name = data.name
+                let fog = data.weather[0].main
+                let description_data = data.weather[0].description
+
+
+
+
+
+                output.innerHTML = ` 
+                <h2>Weather</h2>
+                <div class="description">
+                <h1>${temprature}°c</h1>
+                <p>feel like ${feels_like}°</p>
+                <h3>${name}</h3>
+                <h4></h4>
+                <div class="son-icon">
+                    <p>${fog}</p>
+                    <p>${description_data}</p>
+                </div>
+                </div>
+                <div class="searchbox">
+                <div class="search-sec">
+                        <input type="text" placeholder="  Enter your city" id="user_input">
+                        <a><button onclick="search()" type="button"><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button></a>
+                </div>
+                <div class="details">
+                    <p class="main-heading">Weather Details</p>
+                    <p class="sub-heading">${country}</p>
+                    <p class="main-heading">humidity</p>
+                    <p class="sub-heading">${humidity}%</p>
+                    <p class="main-heading">wind</p>
+                    <p class="sub-heading">${wind}kmps</p>
+                    <p class="main-heading">pressure</p>
+                    <p class="sub-heading">${pressure}</p>
+
+                </div>
+                </div>
+                `
+            })
+        }
+        else {
+            alert("enter the input")
+        }
+    }
+</script>
+
+</html>
