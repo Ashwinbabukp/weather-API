@@ -130,7 +130,7 @@ button:hover {
 }
 .sub-heading{
   font-weight: 600;
-  color: black;
+  color: rgb(0, 0, 0);
 }
 
 @media screen and (max-width: 500px) {
@@ -194,6 +194,9 @@ button:hover {
   }
   .main-heading{
     font-weight: 600;
+  }
+  .sub-heading{
+    color: #ffffff96;
   }
  
 }
